@@ -1,0 +1,26 @@
+import smtplib
+smtp_server = 'outlook.office365.com'
+port = 587
+sender =  "the email you are using to SEND "
+senha = "password for above email (senha = password in portuguese) "
+receiver = "email you are sending to"
+
+
+def mandaremail():
+
+    try:
+        serv = smtplib.SMTP(smtp_server, port)
+        serv.starttls()
+        serv.login(sender, senha)
+        subject = 'TESTANDOOOO'
+        body_email = 'Funcionou'
+        mensagem = 'Subject: {} \n\n {}'.format (subject, body_email)
+        serv.sendmail(sender, receiver, mensagem)
+        print ('FUNCIONOU')
+
+
+    except Exception as e:
+        print (e)
+        print ('NAO FOI DESSA VEZ')
+
+mandaremail()
