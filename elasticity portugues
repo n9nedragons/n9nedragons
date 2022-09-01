@@ -1,0 +1,28 @@
+import pandas as pd
+
+data = pd.DataFrame({"Demand": [20, 30, 31, 33, 30, 33, 35],
+                     "Price": [2000, 1800, 1850, 1700, 1800, 1700, 1600]})
+
+elementos = data.count(axis = 0)
+print (elementos[0])
+variacaodemandalista = [0]
+for i in range (1, elementos[0]):
+    variacaodemandaelemento = (data.at[i, "Demand"] - data.at[i - 1, "Demand"])/ ( (data.at[i , "Demand"] + data.at[i - 1 , "Demand"]) / 2)
+    variacaodemandalista.append(variacaodemandaelemento)
+
+variacaodopreco = [0]
+for j in range (1, elementos[0]):
+    variacaoprecoelemento = (data.at[j, "Price"] - data.at[j -1, "Price"]) / ((data.at[j , "Price"] + data.at[j - 1 , "Price"]) / 2)
+    variacaodopreco.append(variacaoprecoelemento)
+
+data["Variaçao da demanda"] = variacaodemandalista
+data["Variacao do preço"] = variacaodopreco
+
+elasticidadelista = [0]
+for c in range (1, 7):
+    elasticidadeelemento = (data.at[c, "Variaçao da demanda"]) / (data.at[c, "Variacao do preço"])
+    elasticidadelista.append(elasticidadeelemento)
+
+data["elasticidade de t vs t-1"] = elasticidadelista #preço da demanda pelo metodo do ponto medio
+
+print(data)
